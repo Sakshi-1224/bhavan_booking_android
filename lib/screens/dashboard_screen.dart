@@ -10,6 +10,7 @@ import 'custom_facility_screen.dart';
 import 'login_screen.dart';
 import 'facility_detail_screen.dart';
 import 'my_bookings_screen.dart';
+import 'profile_screen.dart';
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
 
@@ -81,7 +82,18 @@ class _DashboardScreenState extends State<DashboardScreen> {
               );
             },
           ),
-          IconButton(icon: const Icon(Icons.logout, color: Colors.redAccent), onPressed: _handleLogout)
+
+          IconButton(
+            icon: const Icon(Icons.account_circle, size: 28),
+            tooltip: 'My Profile',
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const ProfileScreen()),
+              );
+            },
+          ),
+          IconButton(icon: const Icon(Icons.logout, color: Colors.redAccent), onPressed: _handleLogout),
         ],
       ),
       body: FutureBuilder<List<dynamic>>(

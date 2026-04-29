@@ -5,7 +5,7 @@ import '../services/clerk_service.dart';
 import '../services/auth_service.dart';
 import 'login_screen.dart';
 import 'clerk_booking_detail_screen.dart';
-
+import 'profile_screen.dart';
 class ClerkDashboardScreen extends StatefulWidget {
   const ClerkDashboardScreen({super.key});
 
@@ -47,6 +47,16 @@ class _ClerkDashboardScreenState extends State<ClerkDashboardScreen> {
         elevation: 1,
         actions: [
           IconButton(icon: const Icon(Icons.refresh), onPressed: _fetchBookings),
+          IconButton(
+            icon: const Icon(Icons.account_circle, size: 28),
+            tooltip: 'My Profile',
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const ProfileScreen()),
+              );
+            },
+          ),
           IconButton(icon: const Icon(Icons.logout, color: Colors.redAccent), onPressed: _handleLogout)
         ],
       ),
