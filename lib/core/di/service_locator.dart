@@ -6,7 +6,7 @@ import '../../services/facility_service.dart';
 // 1. Make sure this import is here
 import '../../services/booking_service.dart';
 import '../../services/user_booking_service.dart';
-
+import '../../services/clerk_service.dart';
 final getIt = GetIt.instance;
 
 void setupLocator() {
@@ -19,4 +19,5 @@ void setupLocator() {
   // 2. Make sure this line is here!
   getIt.registerLazySingleton<BookingService>(() => BookingService(getIt<ApiClient>()));
   getIt.registerLazySingleton<UserBookingService>(() => UserBookingService(getIt<ApiClient>()));
+  getIt.registerLazySingleton(() => ClerkService(getIt<ApiClient>()));
 }

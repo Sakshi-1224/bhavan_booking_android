@@ -16,11 +16,12 @@ class BookingService {
   }
 
   Future<Map<String, dynamic>> checkAvailabilityAndPrice({
-    required String facilityId,
+    String? facilityId, // Changed to optional
     required DateTime startDate,
     required DateTime endDate,
     required String startTime,
     required String endTime,
+    List<Map<String, dynamic>>? customFacilities, // ADDED for custom bookings
   }) async {
     try {
       DateTime startIso = _combineDateTime(startDate, startTime);
@@ -30,15 +31,25 @@ class BookingService {
         endIso = endIso.add(const Duration(days: 1));
       }
 
+      // Build payload dynamically based on backend requirements
+      final Map<String, dynamic> payload = {
+        'startDate': DateFormat('yyyy-MM-dd').format(startIso),
+        'endDate': DateFormat('yyyy-MM-dd').format(endIso),
+        'startTime': startIso.toUtc().toIso8601String(),
+        'endTime': endIso.toUtc().toIso8601String(),
+      };
+
+      if (facilityId != null && facilityId.isNotEmpty) {
+        payload['facilityId'] = facilityId;
+      }
+
+      if (customFacilities != null && customFacilities.isNotEmpty) {
+        payload['customFacilities'] = customFacilities;
+      }
+
       final response = await _apiClient.dio.post(
         '/bookings/check-availability',
-        data: {
-          'facilityId': facilityId,
-          'startDate': DateFormat('yyyy-MM-dd').format(startIso),
-          'endDate': DateFormat('yyyy-MM-dd').format(endIso),
-          'startTime': startIso.toUtc().toIso8601String(),
-          'endTime': endIso.toUtc().toIso8601String(),
-        },
+        data: payload,
       );
 
       if (response.statusCode == 200) {
@@ -56,16 +67,16 @@ class BookingService {
     }
   }
 
-  // UPDATED: Now acts as a "Request to Book" function
+  // Ensure requestBooking allows facilityId to be nullable as well
   Future<Map<String, dynamic>> requestBooking({
-    required String facilityId,
+    String? facilityId,
     required DateTime startDate,
     required DateTime endDate,
     required String startTime,
     required String endTime,
     required String eventPurpose,
     required int totalGuests,
-    List<Map<String, dynamic>>? customFacilities, // NEW: For Partial Bookings!
+    List<Map<String, dynamic>>? customFacilities,
   }) async {
     try {
       DateTime startIso = _combineDateTime(startDate, startTime);
