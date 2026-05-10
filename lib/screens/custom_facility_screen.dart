@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:intl/intl.dart';
+import '../core/config/app_config.dart';
 import '../core/di/service_locator.dart';
 import '../services/booking_service.dart';
 import 'booking_form_screen.dart';
@@ -20,7 +21,9 @@ class _CustomFacilityScreenState extends State<CustomFacilityScreen> {
 
   String _getValidImageUrl(String? rawUrl) {
     if (rawUrl == null || rawUrl.isEmpty) return '';
-    return rawUrl.replaceAll('127.0.0.1', '10.0.2.2').replaceAll('localhost', '10.0.2.2');
+    return rawUrl
+        .replaceAll('127.0.0.1', AppConfig.apiHost)
+        .replaceAll('localhost', AppConfig.apiHost);
   }
 
   // Robust parsing to fix the 0 price issue locally

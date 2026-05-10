@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import '../core/di/service_locator.dart';
 import '../services/profile_service.dart';
 import 'change_password_screen.dart';
-
+import '../services/auth_service.dart';
+import 'login_screen.dart';
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
 
@@ -13,6 +14,12 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   final _profileService = getIt<ProfileService>();
   late Future<Map<String, dynamic>> _profileFuture;
+  final _authService = getIt<AuthService>();
+  void _handleLogout() async {
+    await _authService.logout();
+    if (!mounted) return;
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const LoginScreen()));
+  }
 
   @override
   void initState() {
@@ -129,9 +136,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ListTile(
                         leading: const Icon(Icons.logout, color: Colors.red),
                         title: const Text('Logout', style: TextStyle(fontWeight: FontWeight.w600, color: Colors.red)),
-                        onTap: () {
-                          // Handle your logout logic here (clear tokens, push to login)
-                        },
+                          onTap: _handleLogout,
                       ),
                     ],
                   ),

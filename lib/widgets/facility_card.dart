@@ -1,6 +1,7 @@
 // lib/widgets/facility_card.dart
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import '../core/config/app_config.dart';
 
 class FacilityCard extends StatelessWidget {
   final Map<String, dynamic> facility;
@@ -14,7 +15,9 @@ class FacilityCard extends StatelessWidget {
 
   String _getValidImageUrl(String? rawUrl) {
     if (rawUrl == null || rawUrl.isEmpty) return '';
-    return rawUrl.replaceAll('127.0.0.1', '10.0.2.2').replaceAll('localhost', '10.0.2.2');
+    return rawUrl
+        .replaceAll('127.0.0.1', AppConfig.apiHost)
+        .replaceAll('localhost', AppConfig.apiHost);
   }
 
   @override
