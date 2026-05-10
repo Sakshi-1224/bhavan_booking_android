@@ -58,12 +58,18 @@ class AuthService {
     }
   }
 
-  Future<Map<String, dynamic>> register({required String name, required String mobile, required String password}) async {
+  Future<Map<String, dynamic>> register({
+    required String name,
+    required String mobile,
+    required String password,
+    String? email,
+  }) async {
     try {
       final response = await _apiClient.dio.post('/auth/user/register', data: {
         'fullName': name,
         'mobile': mobile,
         'password': password,
+        if (email != null && email.isNotEmpty) 'email': email,
       });
 
       if (response.statusCode == 201) {
