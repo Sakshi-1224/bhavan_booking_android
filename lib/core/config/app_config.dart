@@ -8,7 +8,7 @@ class AppConfig {
   // Use '10.0.2.2' ONLY when testing on the Android Emulator
   // static const String apiHost = '10.0.2.2';
 
-  static const String apiPort = '3000';
+  static const String apiPort = '4000';
   static const String apiBaseUrl = 'http://$apiHost:$apiPort/api/v1';
 }
  
