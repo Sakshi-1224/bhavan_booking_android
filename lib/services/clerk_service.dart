@@ -15,7 +15,9 @@ class ClerkService {
   Future<List<dynamic>> getAllBookings() async {
     try {
       final response = await _apiClient.dio.get('/auth/admin/bookings');
-      return response.data['data'] ?? [];
+      final data = response.data['data'];
+      if (data is List) return data;
+      return []; // Fallback if it's a Map or null
     } catch (e) {
       throw Exception('Failed to fetch bookings: $e');
     }
@@ -104,7 +106,11 @@ class ClerkService {
     try {
       final response = await _apiClient.dio.get('/billing/$bookingId/invoice');
       // Extract the 'invoice' object from the backend response payload
-      return response.data['data']?['invoice'] ?? response.data['data'];
+      final rawData = response.data['data'];
+      if (rawData is Map) {
+        return rawData['invoice'] ?? rawData;
+      }
+      return null; // If it's a List or something else, it's not a valid invoice Map
     } on DioException catch (e) {
       if (e.response?.statusCode == 404) {
         return null; // No draft exists yet

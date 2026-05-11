@@ -101,15 +101,18 @@ class FacilityCard extends StatelessWidget {
                     Row(
                       children: [
                         if (capacity != null && capacity.isNotEmpty && capacity != 'null')
-                          Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                            decoration: BoxDecoration(color: Theme.of(context).colorScheme.primaryContainer.withOpacity(0.4), borderRadius: BorderRadius.circular(10)),
-                            child: Row(
-                              children: [
-                                Icon(Icons.people_alt_outlined, size: 18, color: Theme.of(context).colorScheme.primary),
-                                const SizedBox(width: 8),
-                                Text('Cap: $capacity', style: TextStyle(color: Theme.of(context).colorScheme.primary, fontWeight: FontWeight.w600)),
-                              ],
+                          Flexible(
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                              decoration: BoxDecoration(color: Theme.of(context).colorScheme.primaryContainer.withOpacity(0.4), borderRadius: BorderRadius.circular(10)),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Icon(Icons.people_alt_outlined, size: 18, color: Theme.of(context).colorScheme.primary),
+                                  const SizedBox(width: 8),
+                                  Flexible(child: Text('Cap: $capacity', style: TextStyle(color: Theme.of(context).colorScheme.primary, fontWeight: FontWeight.w600), overflow: TextOverflow.ellipsis)),
+                                ],
+                              ),
                             ),
                           )
                         else const SizedBox.shrink(),

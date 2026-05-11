@@ -201,7 +201,8 @@ class _FacilityDetailScreenState extends State<FacilityDetailScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('New Total (Base):', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.orange.shade900, fontSize: 16)),
+                    Expanded(child: Text('New Total (Base):', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.orange.shade900, fontSize: 16), overflow: TextOverflow.ellipsis)),
+                    const SizedBox(width: 8),
                     Text('₹$newTotal', style: TextStyle(fontWeight: FontWeight.w900, fontSize: 22, color: Colors.orange.shade900)),
                   ],
                 ),
@@ -479,12 +480,14 @@ class _FacilityDetailScreenState extends State<FacilityDetailScreen> {
                       children: [
                         Container(padding: const EdgeInsets.all(10), decoration: BoxDecoration(color: Colors.indigo.shade50, shape: BoxShape.circle), child: Icon(Icons.people_alt, color: Colors.indigo.shade700, size: 20)),
                         const SizedBox(width: 16),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text('Maximum Capacity', style: TextStyle(color: Colors.grey, fontSize: 12)),
-                            Text('Up to $capacity guests', style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-                          ],
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text('Maximum Capacity', style: TextStyle(color: Colors.grey, fontSize: 12), overflow: TextOverflow.ellipsis),
+                              Text('Up to $capacity guests', style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16), overflow: TextOverflow.ellipsis),
+                            ],
+                          ),
                         ),
                       ],
                     ),

@@ -98,7 +98,8 @@ class _ClerkGenerateBillScreenState extends State<ClerkGenerateBillScreen> {
 
     // 3. SECURE RAZORPAY CHECK
     final financials = widget.bookingData['financials'] ?? {};
-    final rawIds = financials['razorpayPaymentIds'] as List<dynamic>? ?? [];
+    final rawIdsRaw = financials['razorpayPaymentIds'];
+    final List<dynamic> rawIds = rawIdsRaw is List ? rawIdsRaw : [];
     _hasOnlinePayment = rawIds.any((id) => id != null && id.toString().startsWith('pay_'));
 
     // If no valid Razorpay ID exists, ensure ONLINE isn't accidentally selected
@@ -257,11 +258,13 @@ class _ClerkGenerateBillScreenState extends State<ClerkGenerateBillScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text('Live Financial Preview', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Colors.indigo)),
+                        const Expanded(child: Text('Live Financial Preview', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Colors.indigo), overflow: TextOverflow.ellipsis)),
+                        const SizedBox(width: 8),
                         Chip(
-                          label: Text(_invoiceType, style: const TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: Colors.white)),
+                          label: Text(_invoiceType, style: const TextStyle(fontSize: 9, fontWeight: FontWeight.bold, color: Colors.white)),
                           backgroundColor: _invoiceType == 'GENERAL' ? Colors.indigo : Colors.green,
                           visualDensity: VisualDensity.compact,
+                          padding: const EdgeInsets.symmetric(horizontal: 4),
                         )
                       ],
                     ),
@@ -483,7 +486,8 @@ class _ClerkGenerateBillScreenState extends State<ClerkGenerateBillScreen> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(title, style: TextStyle(fontWeight: isBold ? FontWeight.bold : FontWeight.normal, fontSize: fontSize, color: color)),
+          Expanded(child: Text(title, style: TextStyle(fontWeight: isBold ? FontWeight.bold : FontWeight.normal, fontSize: fontSize, color: color), overflow: TextOverflow.ellipsis)),
+          const SizedBox(width: 8),
           Text('₹${amount.toStringAsFixed(2)}', style: TextStyle(fontWeight: isBold ? FontWeight.bold : FontWeight.normal, fontSize: fontSize, color: color)),
         ],
       ),

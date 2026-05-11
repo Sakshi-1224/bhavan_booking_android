@@ -239,7 +239,8 @@ class _BookingFormScreenState extends State<BookingFormScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text('Amount Due (Rent)', style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: Colors.black87)),
+                        const Expanded(child: Text('Amount Due (Rent)', style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: Colors.black87), overflow: TextOverflow.ellipsis)),
+                        const SizedBox(width: 8),
                         Text('₹$rentAmount', style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.black87)),
                       ],
                     ),
@@ -247,7 +248,8 @@ class _BookingFormScreenState extends State<BookingFormScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text('Security Deposit (Pay at Check-in)', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: Colors.orange.shade800)),
+                        Expanded(child: Text('Security Deposit (Pay at Check-in)', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: Colors.orange.shade800), overflow: TextOverflow.ellipsis)),
+                        const SizedBox(width: 8),
                         Text('₹$depositAmount', style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.orange.shade800)),
                       ],
                     ),
@@ -255,7 +257,8 @@ class _BookingFormScreenState extends State<BookingFormScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text('Estimated Total', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black87)),
+                        const Expanded(child: Text('Estimated Total', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black87), overflow: TextOverflow.ellipsis)),
+                        const SizedBox(width: 8),
                         Text('₹$totalEstimated', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w900, color: Colors.green.shade800)),
                       ],
                     ),

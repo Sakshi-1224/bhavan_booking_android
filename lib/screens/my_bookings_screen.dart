@@ -261,6 +261,7 @@ class _MyBookingsScreenState extends State<MyBookingsScreen> {
                         child: Text(
                           status.replaceAll('_', ' '),
                           style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: _getStatusColor(status)),
+                          softWrap: true,
                         ),
                       ),
                     ],

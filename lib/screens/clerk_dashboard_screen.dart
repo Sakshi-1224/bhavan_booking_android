@@ -106,20 +106,41 @@ class _ClerkDashboardScreenState extends State<ClerkDashboardScreen> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(
-                                'ID: ${booking['id'].toString().substring(0, 8)}',
-                                style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.grey),
+                              Expanded(
+                                child: Text(
+                                  'ID: ${booking['id'].toString().substring(0, 8)}',
+                                  style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.grey),
+                                  overflow: TextOverflow.ellipsis,
+                                ),
                               ),
-                              Chip(
-                                label: Text(booking['status'] ?? 'PENDING', style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
-                                backgroundColor: _getStatusColor(booking['status']).withOpacity(0.15),
-                                side: BorderSide.none,
+                              Flexible(
+                                child: Chip(
+                                  label: Text(
+                                    (booking['status'] ?? 'PENDING').replaceAll('_', ' '), 
+                                    style: const TextStyle(fontSize: 9, fontWeight: FontWeight.bold),
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                  backgroundColor: _getStatusColor(booking['status']).withOpacity(0.15),
+                                  side: BorderSide.none,
+                                  padding: const EdgeInsets.symmetric(horizontal: 4),
+                                  visualDensity: VisualDensity.compact,
+                                ),
                               ),
                             ],
                           ),
                           const SizedBox(height: 8),
-                          Text(userName, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                          Text('Contact: $userMobile', style: TextStyle(color: Colors.grey.shade700)),
+                          Text(
+                            userName, 
+                            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
+                          ),
+                          Text(
+                            'Contact: $userMobile', 
+                            style: TextStyle(color: Colors.grey.shade700),
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
+                          ),
                           const SizedBox(height: 12),
                           const Align(
                             alignment: Alignment.centerRight,
@@ -144,6 +165,8 @@ class _ClerkDashboardScreenState extends State<ClerkDashboardScreen> {
       case 'CLERK_VERIFIED': return Colors.blue;
       case 'CONFIRMED': return Colors.green;
       case 'CHECKED_IN': return Colors.teal;
+      case 'CHECKED_OUT': return Colors.indigo;
+      case 'PENDING_ADMIN_APPROVAL': return Colors.amber;
       case 'REJECTED': return Colors.red;
       case 'CANCELLATION_REQUESTED': return Colors.deepOrange;
       case 'REFUND_PENDING': return Colors.deepOrangeAccent;
