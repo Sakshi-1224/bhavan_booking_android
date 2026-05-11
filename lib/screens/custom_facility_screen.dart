@@ -122,7 +122,8 @@ class _CustomFacilityScreenState extends State<CustomFacilityScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('New Total (Base):', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.orange.shade900, fontSize: 16)),
+                    Expanded(child: Text('New Total (Base):', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.orange.shade900, fontSize: 16), overflow: TextOverflow.ellipsis)),
+                    const SizedBox(width: 8),
                     Text('₹$newTotal', style: TextStyle(fontWeight: FontWeight.w900, fontSize: 22, color: Colors.orange.shade900)),
                   ],
                 ),
@@ -444,13 +445,15 @@ class _CustomFacilityScreenState extends State<CustomFacilityScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const Text('Estimated Total', style: TextStyle(color: Colors.grey, fontSize: 14)),
-                      Text('₹$_totalEstimatedPrice', style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 24)),
-                    ],
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Text('Estimated Total', style: TextStyle(color: Colors.grey, fontSize: 14), overflow: TextOverflow.ellipsis),
+                        Text('₹$_totalEstimatedPrice', style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 24), overflow: TextOverflow.ellipsis),
+                      ],
+                    ),
                   ),
                   ElevatedButton(
                     onPressed: _totalEstimatedPrice > 0 ? () {

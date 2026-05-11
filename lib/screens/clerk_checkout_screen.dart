@@ -83,8 +83,11 @@ class _ClerkCheckoutScreenState extends State<ClerkCheckoutScreen> {
           final sgst = invoice['sgstAmount'] ?? 0;
           final totalAmount = invoice['totalAmount'] ?? 0;
 
-          final additionalItems = invoice['additionalItems'] as List<dynamic>? ?? [];
-          final damages = invoice['damagesAndPenalties'] as List<dynamic>? ?? [];
+          final additionalItemsRaw = invoice['additionalItems'];
+          final List<dynamic> additionalItems = additionalItemsRaw is List ? additionalItemsRaw : [];
+          
+          final damagesRaw = invoice['damagesAndPenalties'];
+          final List<dynamic> damages = damagesRaw is List ? damagesRaw : [];
 
           final balanceDue = invoice['additionalBalanceDue'] ?? 0;
           final refundAmount = invoice['finalRefundAmount'] ?? 0;
@@ -127,21 +130,26 @@ class _ClerkCheckoutScreenState extends State<ClerkCheckoutScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text('Bill To:', style: TextStyle(color: Colors.grey.shade600, fontSize: 12)),
-                                Text(invoice['customerName'] ?? widget.userDetails['fullName'] ?? 'Guest', style: const TextStyle(fontWeight: FontWeight.bold)),
-                                Text(invoice['customerPhone'] ?? widget.userDetails['mobile'] ?? ''),
-                              ],
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text('Bill To:', style: TextStyle(color: Colors.grey.shade600, fontSize: 12)),
+                                  Text(invoice['customerName'] ?? widget.userDetails['fullName'] ?? 'Guest', style: const TextStyle(fontWeight: FontWeight.bold), overflow: TextOverflow.ellipsis),
+                                  Text(invoice['customerPhone'] ?? widget.userDetails['mobile'] ?? '', overflow: TextOverflow.ellipsis),
+                                ],
+                              ),
                             ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                Text('Invoice #', style: TextStyle(color: Colors.grey.shade600, fontSize: 12)),
-                                Text(invoiceNo, style: const TextStyle(fontWeight: FontWeight.bold)),
-                                Text((invoice['createdAt'] ?? DateTime.now().toString()).split('T')[0]),
-                              ],
+                            const SizedBox(width: 16),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  Text('Invoice #', style: TextStyle(color: Colors.grey.shade600, fontSize: 12)),
+                                  Text(invoiceNo, style: const TextStyle(fontWeight: FontWeight.bold), overflow: TextOverflow.ellipsis),
+                                  Text((invoice['createdAt'] ?? DateTime.now().toString()).split('T')[0], overflow: TextOverflow.ellipsis),
+                                ],
+                              ),
                             ),
                           ],
                         ),
@@ -253,7 +261,8 @@ class _ClerkCheckoutScreenState extends State<ClerkCheckoutScreen> {
       padding: const EdgeInsets.symmetric(vertical: 6.0),
       child: Row(
         children: [
-          Expanded(flex: 3, child: Text(title, style: TextStyle(color: color))),
+          Expanded(flex: 3, child: Text(title, style: TextStyle(color: color), overflow: TextOverflow.ellipsis)),
+          const SizedBox(width: 8),
           Expanded(
               flex: 1,
               child: Text(
@@ -273,7 +282,8 @@ class _ClerkCheckoutScreenState extends State<ClerkCheckoutScreen> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(title, style: TextStyle(fontWeight: isBold ? FontWeight.bold : FontWeight.normal, fontSize: fontSize, color: textColor)),
+          Expanded(child: Text(title, style: TextStyle(fontWeight: isBold ? FontWeight.bold : FontWeight.normal, fontSize: fontSize, color: textColor), overflow: TextOverflow.ellipsis)),
+          const SizedBox(width: 8),
           Text('₹${amount.toStringAsFixed(2)}', style: TextStyle(fontWeight: isBold ? FontWeight.bold : FontWeight.normal, fontSize: fontSize, color: textColor)),
         ],
       ),
